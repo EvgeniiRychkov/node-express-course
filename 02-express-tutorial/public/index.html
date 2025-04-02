@@ -1,0 +1,13 @@
+<h1>Hello world!</h1>
+
+<button id="fetchProducts">Get Products</button>
+<div id="productsList"></div>
+
+<script>
+  document.getElementById("fetchProducts").addEventListener("click", async () => {
+    const response = await fetch("/api/v1/products");
+    const data = await response.json();
+    const productsList = document.getElementById("productsList");
+    productsList.innerHTML = data.products.map(p => `<p>${p.name} - $${p.price}</p>`).join("");
+  });
+</script>
