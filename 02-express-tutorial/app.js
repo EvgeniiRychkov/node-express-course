@@ -2,8 +2,17 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const { products } = require("./data");
-// Middleware
-app.use(express.static("./public"));
+const logger = require("./logger");
+
+const people = require("./routes/people");
+const auth = require("./routes/auth");
+
+app.use(logger)
+app.use(express.static("./methods-public"));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use('/api/people', people)
+app.use('/login', auth)
 
 app.get("/about", (req, res) => {
   return res.status(200).sendFile(__dirname + "/public/about.html");
